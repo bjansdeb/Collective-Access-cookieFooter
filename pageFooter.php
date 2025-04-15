@@ -101,7 +101,7 @@
  	<div id="cookies-banner" aria-hidden="true">
  		<h3 style="color:white">Ils sont bons mes cookies</h3>
  		<p>Notre site web utilise uniquement des cookies nécessaires à son bon fonctionnement.</p>
- 		<p>Vous pouvez en savoir plus sur ceux-ci en cliquant <a href="">ici </a> ou via le lien Disclaimer en bas de la page.</p>
+ 		<p>Vous pouvez en savoir plus sur ceux-ci en cliquant <a href="/Cookies/Disclaimer">ici </a> ou via le lien Cookies en bas de la page.</p>
  		<p><strong>Ces cookies ne collectent pas vos données personnelles.</strong></p>
  		<!-- <button type="button" onclick="removeCookies()">Accepter les cookies essentiels</button> -->
  		<!-- <button type="button" onclick="showBanner()">Ok j'ai compris</button> -->
@@ -109,19 +109,33 @@
  	</div>
 
  	<script type="text/javascript">
+			/*cookies pop up */ 
+
+			function cookieApproval(){
+	  			const d = new Date();
+  				d.setTime(d.getTime() + (180 * 24 * 60 * 60 * 1000));
+  				let expires = "expires="+ d.toUTCString();
+  				document.cookie = "coBanner= cookieLike;" + expires + "domain=carhif.lescollections.be;path=/";
+			}
+                  
  			function showBanner(){
- 				sessionStorage.setItem("1", "Welcome");
+ 				cookieApproval();
+ 				// localStorage.setItem("1", "Welcome");
 				document.getElementById("cookies-banner").setAttribute("aria-hidden", true);
 			}
 
 			function removeCookies(){
 				eraseCookies();
- 				sessionStorage.setItem("1", "noCookies");
+ 				localStorage.setItem("1", "noCookies");
  				document.getElementById("cookies-banner").setAttribute("aria-hidden", true);				
 				// showBanner();
 			}
 
-			if (sessionStorage.length < 1) {
+			//si choix cookie vide, ouvre la fenêtre pop up
+			const cookiesChoice = $.cookie("coBanner");
+			console.log(cookiesChoice);
+			// const cookiesChoice = localStorage.getItem("1", "Welcome");
+			if (cookiesChoice == null) {
 				document.getElementById("cookies-banner").setAttribute("aria-hidden", false);
 			}
 
